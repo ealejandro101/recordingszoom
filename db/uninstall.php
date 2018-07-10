@@ -19,14 +19,14 @@
  *
  * @see uninstall_plugin()
  *
- * @package    mod_newmodule
- * @copyright  2016 Your Name <your@email.address>
+ * @package    mod_recordingszoom
+ * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Custom uninstallation procedure
  */
-function xmldb_newmodule_uninstall() {
+function xmldb_recordingszoom_uninstall() {
     return true;
 }

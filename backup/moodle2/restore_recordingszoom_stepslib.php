@@ -15,23 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Define all the restore steps that will be used by the restore_newmodule_activity_task
+ * Define all the restore steps that will be used by the restore_recordingszoom_activity_task
  *
- * @package   mod_newmodule
+ * @package   mod_recordingszoom
  * @category  backup
- * @copyright 2016 Your Name <your@email.address>
+ * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Structure step to restore one newmodule activity
+ * Structure step to restore one recordingszoom activity
  *
- * @package   mod_newmodule
+ * @package   mod_recordingszoom
  * @category  backup
- * @copyright 2016 Your Name <your@email.address>
+ * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class restore_newmodule_activity_structure_step extends restore_activity_structure_step {
+class restore_recordingszoom_activity_structure_step extends restore_activity_structure_step {
 
     /**
      * Defines structure of path elements to be processed during the restore
@@ -41,7 +41,7 @@ class restore_newmodule_activity_structure_step extends restore_activity_structu
     protected function define_structure() {
 
         $paths = array();
-        $paths[] = new restore_path_element('newmodule', '/activity/newmodule');
+        $paths[] = new restore_path_element('recordingszoom', '/activity/recordingszoom');
 
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
@@ -52,7 +52,7 @@ class restore_newmodule_activity_structure_step extends restore_activity_structu
      *
      * @param array $data parsed element data
      */
-    protected function process_newmodule($data) {
+    protected function process_recordingszoom($data) {
         global $DB;
 
         $data = (object)$data;
@@ -72,8 +72,8 @@ class restore_newmodule_activity_structure_step extends restore_activity_structu
             $data->grade = -($this->get_mappingid('scale', abs($data->grade)));
         }
 
-        // Create the newmodule instance.
-        $newitemid = $DB->insert_record('newmodule', $data);
+        // Create the recordingszoom instance.
+        $newitemid = $DB->insert_record('recordingszoom', $data);
         $this->apply_activity_instance($newitemid);
     }
 
@@ -81,7 +81,7 @@ class restore_newmodule_activity_structure_step extends restore_activity_structu
      * Post-execution actions
      */
     protected function after_execute() {
-        // Add newmodule related files, no need to match by itemname (just internally handled context).
-        $this->add_related_files('mod_newmodule', 'intro', null);
+        // Add recordingszoom related files, no need to match by itemname (just internally handled context).
+        $this->add_related_files('mod_recordingszoom', 'intro', null);
     }
 }

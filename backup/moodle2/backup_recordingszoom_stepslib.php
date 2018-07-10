@@ -15,25 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Define all the backup steps that will be used by the backup_newmodule_activity_task
+ * Define all the backup steps that will be used by the backup_recordingszoom_activity_task
  *
- * @package   mod_newmodule
+ * @package   mod_recordingszoom
  * @category  backup
- * @copyright 2016 Your Name <your@email.address>
+ * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 /**
- * Define the complete newmodule structure for backup, with file and id annotations
+ * Define the complete recordingszoom structure for backup, with file and id annotations
  *
- * @package   mod_newmodule
+ * @package   mod_recordingszoom
  * @category  backup
- * @copyright 2016 Your Name <your@email.address>
+ * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class backup_newmodule_activity_structure_step extends backup_activity_structure_step {
+class backup_recordingszoom_activity_structure_step extends backup_activity_structure_step {
 
     /**
      * Defines the backup structure of the module
@@ -45,22 +45,22 @@ class backup_newmodule_activity_structure_step extends backup_activity_structure
         // Get know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
 
-        // Define the root element describing the newmodule instance.
-        $newmodule = new backup_nested_element('newmodule', array('id'), array(
+        // Define the root element describing the recordingszoom instance.
+        $recordingszoom = new backup_nested_element('recordingszoom', array('id'), array(
             'name', 'intro', 'introformat', 'grade'));
 
         // If we had more elements, we would build the tree here.
 
         // Define data sources.
-        $newmodule->set_source_table('newmodule', array('id' => backup::VAR_ACTIVITYID));
+        $recordingszoom->set_source_table('recordingszoom', array('id' => backup::VAR_ACTIVITYID));
 
         // If we were referring to other tables, we would annotate the relation
         // with the element's annotate_ids() method.
 
         // Define file annotations (we do not use itemid in this example).
-        $newmodule->annotate_files('mod_newmodule', 'intro', null);
+        $recordingszoom->annotate_files('mod_recordingszoom', 'intro', null);
 
-        // Return the root element (newmodule), wrapped into standard activity structure.
-        return $this->prepare_activity_structure($newmodule);
+        // Return the root element (recordingszoom), wrapped into standard activity structure.
+        return $this->prepare_activity_structure($recordingszoom);
     }
 }
