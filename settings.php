@@ -39,15 +39,4 @@ if ($ADMIN->fulltree) {
     $apisecret = new admin_setting_configtext('mod_recordingszoom/apisecret', get_string('apisecret', 'mod_recordingszoom'),
             get_string('apisecret_desc', 'mod_recordingszoom'), '', PARAM_ALPHANUMEXT);
     $settings->add($apisecret);
-
-    $jointimechoices = array(30, 60, 90, 120, 240);
-    $jointimeselect = array();
-    foreach ($jointimechoices as $minutes) {
-        $jointimeselect[$minutes] = $minutes . ' ' . get_string('mins');
-    }
-    $firstabletojoin = new admin_setting_configselect('mod_recordingszoom/firstabletojoin',
-            get_string('firstjoin', 'mod_recordingszoom'), get_string('firstjoin_desc', 'mod_recordingszoom'),
-            15, $jointimeselect);
-    $settings->add($firstabletojoin);
-
 }

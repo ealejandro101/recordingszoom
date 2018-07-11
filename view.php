@@ -59,9 +59,10 @@ $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($recordingszoom->name));
 $PAGE->set_heading(format_string($course->fullname));
 
+
+$PAGE->set_cacheable(false);
 /*
  * Other things you may want to set - remove if not needed.
- * $PAGE->set_cacheable(false);
  * $PAGE->set_focuscontrol('some-html-id');
  * $PAGE->add_body_class('recordingszoom-'.$somevar);
  */
@@ -76,6 +77,29 @@ if ($recordingszoom->intro) {
 
 // Replace the following lines with you own code.
 echo $OUTPUT->heading('Yay! It works!');
+
+$service = new mod_zoom_webservice();
+
+// Retrieve a meeting information with zoom v2 API
+$zoommeeting = $service->get_meeting_info($recordingszoom);
+
+$host_id = $zoommeeting->host_id;
+
+// Retrieve List all the recordings with zoom v2 API
+$zoomlistmeetings_with_recordings =  $service->get_user_cloudrecordings_list($recordingszoom, $host_id );
+
+$table = new html_table();
+$table->attributes['class'] = 'generaltable mod_view';
+
+$table->align = array('center', 'left');
+$numcolumns = 5;
+
+
+
+
+// ToDo - Validación que el host_id este matriculado como profesor del curso
+
+
 
 // Finish the page.
 echo $OUTPUT->footer();
