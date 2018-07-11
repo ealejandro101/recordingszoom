@@ -16,7 +16,7 @@
         <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="100" SEQUENCE="false" COMMENT="The maximum grade. Can be negative to indicate the use of a scale."/>
         <FIELD NAME="zoom_meeting_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="IDs meetings de Zoom vinculadas a este curso."/>
         <FIELD NAME="fechainicialbusqueda" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Fecha inicial para buscar grabaciones en zoom del ID relacionado."/>
-        <FIELD NAME="ultimafechabuscada" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Fecha final o Ultima fecha buscada."/>
+        <FIELD NAME="ultimafechabuscada" TYPE="int" LENGTH="10"  UNSIGNED="true" SEQUENCE="false" COMMENT="Fecha final o Ultima fecha buscada."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

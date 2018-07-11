@@ -49,7 +49,7 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        // Adding the standard "name" field.
+        // Adding the standard "name" field, meeting zoom topic.
         $mform->addElement('text', 'name', get_string('recordingszoomname', 'recordingszoom'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
@@ -67,15 +67,21 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
-        // Adding the rest of recordingszoom settings, spreading all them into this fieldset
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        $mform->addElement('static', 'label1', 'recordingszoomsetting1', 'Your recordingszoom fields go here. Replace me!');
+        
+        // Adicionar el zoom id
+        $mform->addElement('text', 'zoom_meeting_id', get_string('zoom_meeting_id', 'recordingszoom'), array('size' == '10'));
+        $mform->setType('zoom_meeting_id', PARAM_INT);
+        $mform->addRule('zoom_meeting_id', get_string('falla_zoom_meeting_id', 'recordingszoom'), 'required', null, 'client');
+        $mform->addHelpButton('zoom_meeting_id', 'zoom_meeting_id', 'recordingszoom');
 
-        $mform->addElement('header', 'recordingszoomfieldset', get_string('recordingszoomfieldset', 'recordingszoom'));
-        $mform->addElement('static', 'label2', 'recordingszoomsetting2', 'Your recordingszoom fields go here. Replace me!');
+
+        // fechainicialbusqueda.
+        $mform->addElement('date_time_selector', 'fechainicialbusqueda', get_string('fechainicialbusqueda', 'recordingszoom'));
+        $mform->addHelpButton('fechainicialbusqueda', 'fechainicialbusqueda', 'recordingszoom');
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
+        $mform->setDefault('grade', false);
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
