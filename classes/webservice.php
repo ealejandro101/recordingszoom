@@ -50,7 +50,7 @@ class mod_recordingszoom_webservice {
     }
 
 
-    function getUsers () {
+    public function getUsers () {
         //list users endpoint GET https://api.zoom.us/v2/users
         $ch = curl_init('https://api.zoom.us/v2/users');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -62,11 +62,11 @@ class mod_recordingszoom_webservice {
         $response = curl_exec($ch);
         $response = json_decode($response);
         return $response;
-    };
+    }
 
 
     //function to generate JWT
-    function generateJWT () {
+    public function generateJWT () {
         // JWT PHP Library https://github.com/firebase/php-jwt
         use \Firebase\JWT\JWT;
         $config = get_config('mod_zoom');
