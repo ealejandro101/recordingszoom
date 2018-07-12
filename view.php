@@ -61,10 +61,14 @@ if ($recordingszoom->intro) {
     echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
 }
 
-// Replace the following lines with you own code.
-echo $OUTPUT->heading('Yay! It works!');
 
-$service = new mod_zoom_webservice();
+
+
+$service = new mod_recordingszoom_webservice();
+
+$listusers = $service->getUsers();
+
+echo $OUTPUT->heading($listusers);
 
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = $service->get_meeting_info($recordingszoom);
@@ -85,6 +89,7 @@ $table->attributes['class'] = 'generaltable mod_view';
 
 $table->align = array('center', 'left');
 $numcolumns = 5;
+
 
 
 
