@@ -27,12 +27,38 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/*
- * Does something really useful with the passed things
+global $CFG;
+require_once($CFG->dirroot.'/mod/zoom/lib.php');
+require_once($CFG->dirroot.'/mod/zoom/classes/webservice.php');
+
+/**
+ * Get course/cm/zoom objects from url parameters, and check for login/permissions.
  *
- * @param array $things
- * @return object
- *function recordingszoom_do_something_useful(array $things) {
- *    return new stdClass();
- *}
+ * @return array Array of ($course, $cm, $zoom)
  */
+function recordingszoom_get_instance_setup() {
+    global $DB;
+
+    $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
+    $n  = optional_param('n', 0, PARAM_INT);  // ... recordingszoom instance ID - it should be named as the first character of the module.
+    
+    if ($id) {
+        $cm         = get_coursemodule_from_id('recordingszoom', $id, 0, false, MUST_EXIST);
+        $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+        $recordingszoom  = $DB->get_record('recordingszoom', array('id' => $cm->instance), '*', MUST_EXIST);
+    } else if ($n) {
+        $recordingszoom  = $DB->get_record('recordingszoom', array('id' => $n), '*', MUST_EXIST);
+        $course     = $DB->get_record('course', array('id' => $recordingszoom->course), '*', MUST_EXIST);
+        $cm         = get_coursemodule_from_instance('recordingszoom', $recordingszoom->id, $course->id, false, MUST_EXIST);
+    } else {
+        error('You must specify a course_module ID or an instance ID');
+    }
+    
+    require_login($course, true, $cm);
+
+    $context = context_module::instance($cm->id);
+    require_capability('mod/recordingszoom:view', $context);
+
+    return array($course, $cm, $recordingszoom);
+}
+

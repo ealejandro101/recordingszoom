@@ -27,23 +27,9 @@
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once(dirname(__FILE__).'/locallib.php');
 
-$id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
-$n  = optional_param('n', 0, PARAM_INT);  // ... recordingszoom instance ID - it should be named as the first character of the module.
-
-if ($id) {
-    $cm         = get_coursemodule_from_id('recordingszoom', $id, 0, false, MUST_EXIST);
-    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $recordingszoom  = $DB->get_record('recordingszoom', array('id' => $cm->instance), '*', MUST_EXIST);
-} else if ($n) {
-    $recordingszoom  = $DB->get_record('recordingszoom', array('id' => $n), '*', MUST_EXIST);
-    $course     = $DB->get_record('course', array('id' => $recordingszoom->course), '*', MUST_EXIST);
-    $cm         = get_coursemodule_from_instance('recordingszoom', $recordingszoom->id, $course->id, false, MUST_EXIST);
-} else {
-    error('You must specify a course_module ID or an instance ID');
-}
-
-require_login($course, true, $cm);
+list($course, $cm, $recordingszoom) = recordingszoom_get_instance_setup();
 
 $event = \mod_recordingszoom\event\course_module_viewed::create(array(
     'objectid' => $PAGE->cm->instance,
@@ -85,6 +71,12 @@ $zoommeeting = $service->get_meeting_info($recordingszoom);
 
 $host_id = $zoommeeting->host_id;
 
+/** 
+ * ToDo - Validación que el host_id este matriculado como profesor del curso
+ * Consultar el email_zoom del usuario con el host_id
+ * Buscar en los profesores del curso el email_zoom
+ * */
+
 // Retrieve List all the recordings with zoom v2 API
 $zoomlistmeetings_with_recordings =  $service->get_user_cloudrecordings_list($recordingszoom, $host_id );
 
@@ -97,7 +89,7 @@ $numcolumns = 5;
 
 
 
-// ToDo - Validación que el host_id este matriculado como profesor del curso
+
 
 
 
