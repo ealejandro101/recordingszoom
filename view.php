@@ -62,11 +62,16 @@ if ($recordingszoom->intro) {
 }
 
 
+echo $OUTPUT->heading("Uno");
 
 
 $service = new mod_recordingszoom_webservice();
 
+echo $OUTPUT->heading("Dos");
+
 $listusers = $service->getUsers();
+
+echo $OUTPUT->heading("Tres");
 
 echo $OUTPUT->heading($listusers);
 
