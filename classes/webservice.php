@@ -29,6 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/recordingszoom/firebase/JWT.php');
 
+        // JWT PHP Library https://github.com/firebase/php-jwt
+        use \Firebase\JWT\JWT;
+
 /**
  * Web service class.
  *
@@ -67,8 +70,7 @@ class mod_recordingszoom_webservice {
 
     //function to generate JWT
     public function generateJWT () {
-        // JWT PHP Library https://github.com/firebase/php-jwt
-        use \Firebase\JWT\JWT;
+
         $config = get_config('mod_zoom');
         //Zoom API credentials from https://developer.zoom.us/me/
         $key = '<zoom_api_key>';
