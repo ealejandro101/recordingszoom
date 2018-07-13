@@ -53,10 +53,12 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         $todas_meetings = $response->meetings;
         
         foreach ($todas_meetings as $meeting) {
+            echo </br>
+            echo $meeting->id . " - " . $recordingszoom->zoom_meeting_id;
             if($meeting->id == $recordingszoom->zoom_meeting_id) {
                 var_dump($meeting->id);
             } else {
-                echo "No es la misma\n";
+                echo "No es la misma";
             }
         }
     } else {
