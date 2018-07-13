@@ -69,7 +69,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
 
 
 function mod_recordingszoom_get_meeting_info($recordingszoom) {
-    $ch = curl_init('https://api.zoom.us/v2/meetings/' . '299176292');
+    $ch = curl_init('https://api.zoom.us/v2/meetings/' . $recordingszoom->zoom_meeting_id);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // add token to the authorization header
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
