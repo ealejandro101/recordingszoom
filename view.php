@@ -28,6 +28,7 @@
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
+require_once(dirname(__FILE__).'/zoom_broker.php');
 
 list($course, $cm, $recordingszoom) = recordingszoom_get_instance_setup();
 
@@ -65,18 +66,16 @@ if ($recordingszoom->intro) {
 echo $OUTPUT->heading("Uno");
 
 
-$service = new mod_recordingszoom_webservice();
-
 echo $OUTPUT->heading("Dos");
 
-$listusers = $service->getUsers();
+$listusers = getUsers();
 
 echo $OUTPUT->heading("Tres");
 
 echo $OUTPUT->heading($listusers);
 
 // Retrieve a meeting information with zoom v2 API
-$zoommeeting = $service->get_meeting_info($recordingszoom);
+$zoommeeting = get_meeting_info($recordingszoom);
 
 $host_id = $zoommeeting->host_id;
 
