@@ -43,7 +43,7 @@ $event->trigger();
 // Print the page header.
 
 $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($recordingszoom->name));
+$PAGE->set_title( 'Lista de grabaciones vinculadas con reunión de Zoom');
 $PAGE->set_heading(format_string($course->fullname));
 
 $PAGE->set_cacheable(false);
@@ -68,6 +68,7 @@ if ($recordingszoom->intro) {
 
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
+
 
 
 
