@@ -46,7 +46,6 @@ $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($recordingszoom->name));
 $PAGE->set_heading(format_string($course->fullname));
 
-
 $PAGE->set_cacheable(false);
 /*
  * Other things you may want to set - remove if not needed.
@@ -55,6 +54,11 @@ $PAGE->set_cacheable(false);
  */
 
 // Output starts here.
+
+$strtopic = get_string('topic', 'mod_recordingszoom');
+
+
+
 echo $OUTPUT->header();
 
 // Conditions to show the intro can change to look for own settings or whatever.
@@ -85,7 +89,7 @@ $table->attributes['class'] = 'generaltable mod_view';
 $table->align = array('center', 'left');
 $numcolumns = 4;
 
-$topic = new html_table_cell(get_string('topic', 'recordingszoom'));
+$topic = new html_table_cell( $strtopic );
 $topic->header = true;
 
 $start_time = new html_table_cell(get_string('start_time', 'recordingszoom'));
