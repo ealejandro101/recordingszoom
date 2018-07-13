@@ -47,27 +47,22 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
     ));
     $response = curl_exec($ch);
     
+    $meetings_recordings = array();
     if( $response->next_page_token == ''){
         
         $response = json_decode($response);
         $todas_meetings = $response->meetings;
         
         foreach ($todas_meetings as $meeting) {
-            echo "</br>";
-            echo $meeting->id . " - " . $recordingszoom->zoom_meeting_id;
             if($meeting->id == $recordingszoom->zoom_meeting_id) {
-                var_dump($meeting->id);
-            } else {
-                echo "No es la misma";
-            }
+                $meetings_recordings = $meeting;
+            } 
         }
     } else {
         // Todo hay que ir por otra pagina
         echo "estaba vacio";
     }
-
-    
-    return $response;
+    return $meetings_recordings;
 }
 
 
