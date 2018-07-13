@@ -31,6 +31,11 @@ global $CFG;
 require_once($CFG->dirroot.'/mod/zoom/lib.php');
 require_once($CFG->dirroot.'/mod/zoom/classes/webservice.php');
 
+if (file_exists(dirname(__FILE__).'/vendor/firebase/php-jwt/src/JWT.php')) {
+    require_once(dirname(__FILE__).'/vendor/firebase/php-jwt/src/JWT.php');
+}
+
+
 /**
  * Get course/cm/zoom objects from url parameters, and check for login/permissions.
  *
