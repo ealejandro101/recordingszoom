@@ -85,20 +85,27 @@ $table->attributes['class'] = 'generaltable mod_view';
 $table->align = array('center', 'left');
 $numcolumns = 4;
 
-foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
-    
+$topic = new html_table_cell(get_string('topic', 'recordingszoom'));
+$topic->header = true;
 
-    //$meeting_recording = json_decode($meeting_recording_obj);
+$start_time = new html_table_cell(get_string('start_time', 'recordingszoom'));
+$start_time->header = true;
+
+$duration = new html_table_cell(get_string('duration', 'recordingszoom'));
+$duration->header = true;
+
+$play_url = new html_table_cell(get_string('play_url', 'recordingszoom'));
+$play_url->header = true;
+
+$table->data[] = array($topic, $start_time, $duration, $play_url );
+
+
+
+foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
 
     $topic = new html_table_cell($meeting_recording->topic);
-    $topic->header = true;
-    
     $start_time = new html_table_cell($meeting_recording->start_time);
-    $start_time->header = true;
-
     $duration = new html_table_cell($meeting_recording->duration);
-    $duration->header = true;
-
     $url_file_recording_mp4 = "";
     foreach($meeting_recording->recording_files as $file_recording){
         if($file_recording->file_type == "MP4"){
@@ -107,7 +114,6 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     }
     // Todo, que hacer si no hay MP4?
     $play_url = new html_table_cell($url_file_recording_mp4);
-    $play_url->header = true;
 
     $table->data[] = array($topic, $start_time, $duration, $play_url );
 }
