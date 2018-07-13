@@ -35,8 +35,8 @@ use \Firebase\JWT\JWT;
 
 
 function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id) {
-    $fi = '2018-05-05';
-    $ff = '2018-06-04';
+    $fi = '2018-06-14';
+    $ff = '2018-07-13';
     $serviceurl = 'https://api.zoom.us/v2/users/' . $host_id . '/' . 'recordings' . '?from=' . $fi . '&to=' . $ff;
     
     $ch = curl_init($serviceurl);
