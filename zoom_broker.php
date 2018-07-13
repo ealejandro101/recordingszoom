@@ -49,6 +49,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
     
     if( $response->next_page_token == ''){
         echo "no estaba vacio";
+        $response = json_decode($response);
         $todas_meetings = $response->meetings;
         echo $todas_meetings;
         foreach ($todas_meetings as $meeting) {
@@ -59,7 +60,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         echo "estaba vacio";
     }
 
-    $response = json_decode($response);
+    
     return $response;
 }
 
