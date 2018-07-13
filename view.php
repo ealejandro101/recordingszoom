@@ -69,8 +69,6 @@ $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
 
 $host_id = $zoommeeting->host_id;
 
-echo $host_id;
-
 /** 
  * ToDo - Validación que el host_id este matriculado como profesor del curso
  * Consultar el email_zoom del usuario con el host_id
