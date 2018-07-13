@@ -55,7 +55,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         
         foreach ($todas_meetings as $meeting) {
             if($meeting->id == $recordingszoom->zoom_meeting_id) {
-                $meetings_recordings = $meeting;
+                $meetings_recordings[] = $meeting;
             } 
         }
     } else {
