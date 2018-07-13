@@ -48,7 +48,7 @@ function getUsers () {
     //list users endpoint GET https://api.zoom.us/v2/users
     $ch = curl_init('https://api.zoom.us/v2/users');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
+    var_dump("CURL");
     // add token to the authorization header
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Authorization: Bearer ' . generateJWT()
