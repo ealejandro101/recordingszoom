@@ -62,24 +62,10 @@ if ($recordingszoom->intro) {
     echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
 }
 
-
-echo $OUTPUT->heading("Uno");
-
-
-echo $OUTPUT->heading("Dos");
-
-$listusers = mod_recordingszoom_getUsers();
-
-echo $listusers;
-
-echo $OUTPUT->heading("Tres");
-
-
-
-echo $OUTPUT->heading($listusers);
-
 // Retrieve a meeting information with zoom v2 API
-$zoommeeting = get_meeting_info($recordingszoom);
+$zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
+
+var_dump($zoommeeting);
 
 $host_id = $zoommeeting->host_id;
 
