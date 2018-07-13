@@ -48,13 +48,14 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
     $response = curl_exec($ch);
     
     if( $response->next_page_token == ''){
+        echo "no estaba vacio";
         $todas_meetings = $response->meetings;
         foreach ($todas_meetings as $meeting) {
             echo $meeting->id;
         }
     } else {
         // Todo hay que ir por otra pagina
-        echo "no estaba vacio";
+        echo "estaba vacio";
     }
 
     $response = json_decode($response);
