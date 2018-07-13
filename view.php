@@ -72,7 +72,7 @@ if ($recordingszoom->intro) {
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
 
-
+echo $OUTPUT->heading(format_string('Lista de grabaciones para la reunión ' . $recordingszoom->zoom_meeting_id), 2);
 
 
 $host_id = $zoommeeting->host_id;
