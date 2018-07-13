@@ -45,20 +45,6 @@ function mod_recordingszoom_get_meeting_info($recordingszoom) {
     return $response;
 }
 
-
-function mod_recordingszoom_getUsers () {
-    //list users endpoint GET https://api.zoom.us/v2/users
-    $ch = curl_init('https://api.zoom.us/v2/users');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // add token to the authorization header
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
-    ));
-    $response = curl_exec($ch);
-    $response = json_decode($response);
-    return $response;
-}
-
 function mod_recordingszoom_getUsers () {
     //list users endpoint GET https://api.zoom.us/v2/users
     $ch = curl_init('https://api.zoom.us/v2/users');
