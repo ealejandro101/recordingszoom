@@ -65,7 +65,7 @@ if ($recordingszoom->intro) {
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
 
-var_dump($zoommeeting);
+
 
 $host_id = $zoommeeting->host_id;
 
