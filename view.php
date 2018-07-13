@@ -99,7 +99,7 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     $duration->header = true;
 
     $url_file_recording_mp4 = "";
-    for($meeting_recording->recording_files as $file_recording){
+    foreach($meeting_recording->recording_files as $file_recording){
         if($file_recording->file_type == "MP4"){
             $url_file_recording_mp4 = $url_file_recording_mp4 . " - " . $file_recording->play_url;
         }
