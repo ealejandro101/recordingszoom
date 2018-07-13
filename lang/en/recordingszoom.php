@@ -39,10 +39,10 @@ $string['recordingszoomname'] = 'Topic';
 $string['recordingszoomname_help'] = 'Tema asociado con la reunión de zoom y el aula moodle.';
 $string['recordingszoom'] = 'Grabaciones Zoom';
 $string['pluginadministration'] = 'Administración Grabaciones Zoom';
-$string['zoom_meeting_id'] = 'Zoom meeting ID';
+$string['zoommeetingid'] = 'Zoom meeting ID';
 $string['fechainicialbusqueda'] = 'Fecha inicial de busqueda';
 $string['topic'] = 'Tema';
-$string['start_time'] = 'Fecha de inicio';
+$string['starttime'] = 'Fecha de inicio';
 $string['duration'] = 'Duración';
-$string['play_url'] = 'Url de reproducción';
+$string['playurl'] = 'Url de reproducción';
 
