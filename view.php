@@ -40,10 +40,14 @@ $event->add_record_snapshot('course', $PAGE->course);
 $event->add_record_snapshot($PAGE->cm->modname, $recordingszoom);
 $event->trigger();
 
-// Print the page header.
 
+$strpagetitle = get_string('pagetitle', 'recordingszoom');
+$strtopic = get_string('topic', 'mod_recordingszoom');
+
+
+// Print the page header.
 $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
-$PAGE->set_title( 'Lista de grabaciones vinculadas con reunión de Zoom');
+$PAGE->set_title( $strpagetitle );
 $PAGE->set_heading(format_string($course->fullname));
 
 $PAGE->set_cacheable(false);
@@ -55,7 +59,7 @@ $PAGE->set_cacheable(false);
 
 // Output starts here.
 
-$strtopic = get_string('topic', 'mod_recordingszoom');
+
 
 
 
