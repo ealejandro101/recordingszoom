@@ -26,7 +26,6 @@
  */
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 require_once(dirname(__FILE__).'/zoom_broker.php');
 
@@ -41,8 +40,8 @@ $event->add_record_snapshot($PAGE->cm->modname, $recordingszoom);
 $event->trigger();
 
 
-$strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
-$strtopic = get_string('topic', 'mod_recordingszoom');
+$strpagetitle = get_string('pagetitle', 'recordingszoom');
+$strtopic = get_string('topic', 'recordingszoom');
 
 
 // Print the page header.
