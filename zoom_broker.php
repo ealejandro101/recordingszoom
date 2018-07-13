@@ -38,7 +38,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
     $fi = '2018-05-05';
     $ff = '2018-06-04';
     $serviceurl = 'https://api.zoom.us/v2/users/' . $host_id . '/' . 'recordings' . '?from=' . $fi . '&to=' . $ff;
-    echo $serviceurl;
+    
     $ch = curl_init($serviceurl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // add token to the authorization header
@@ -46,7 +46,16 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
     ));
     $response = curl_exec($ch);
-    var_dump($response);
+    
+    if( $response->next_page_token == ''){
+        $todas_meetings = $response->meetings;
+        foreach ($todas_meetings as $meeting) {
+            echo $meeting->id;
+        }
+    } else {
+        // Todo hay que ir por otra pagina
+        echo "no estaba vacio";
+    }
 
     $response = json_decode($response);
     return $response;
