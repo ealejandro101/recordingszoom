@@ -84,10 +84,10 @@ $table->attributes['class'] = 'generaltable mod_view';
 $table->align = array('center', 'left');
 $numcolumns = 4;
 
-foreach ($zoomlistmeetings_with_recordings as $meeting_recording_obj ) {
+foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     
 
-    $meeting_recording = json_decode($meeting_recording_obj);
+    //$meeting_recording = json_decode($meeting_recording_obj);
 
     $topic = new html_table_cell($meeting_recording->topic);
     $topic->header = true;
@@ -105,7 +105,7 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording_obj ) {
 }
 
 
-
+echo html_writer::table($table);
 
 
 // Finish the page.
