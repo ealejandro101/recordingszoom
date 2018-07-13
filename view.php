@@ -65,9 +65,11 @@ if ($recordingszoom->intro) {
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
 
-var_dump($zoommeeting);
+
 
 $host_id = $zoommeeting->host_id;
+
+var_dump($host_id);
 
 /** 
  * ToDo - Validación que el host_id este matriculado como profesor del curso
@@ -76,7 +78,9 @@ $host_id = $zoommeeting->host_id;
  * */
 
 // Retrieve List all the recordings with zoom v2 API
-$zoomlistmeetings_with_recordings =  $service->get_user_cloudrecordings_list($recordingszoom, $host_id );
+$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id );
+
+var_dump($zoomlistmeetings_with_recordings);
 
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_view';
