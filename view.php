@@ -98,10 +98,17 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     $duration = new html_table_cell($meeting_recording->duration);
     $duration->header = true;
 
-    $play_url = new html_table_cell($meeting_recording->recording_files);
+    $url_file_recording_mp4 = "";
+    for($meeting_recording->recording_files as $file_recording){
+        if($file_recording->file_type == "MP4"){
+            $url_file_recording_mp4 = $url_file_recording_mp4 . " - " . $file_recording->play_url;
+        }
+    }
+    // Todo, que hacer si no hay MP4?
+    $play_url = new html_table_cell($url_file_recording_mp4);
     $play_url->header = true;
 
-    $table->data[] = array($title,$start_time, $duration, $play_url );
+    $table->data[] = array($topic, $start_time, $duration, $play_url );
 }
 
 
