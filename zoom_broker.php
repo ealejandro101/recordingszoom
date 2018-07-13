@@ -50,7 +50,7 @@ function mod_recordingszoom_getUsers () {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // add token to the authorization header
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Authorization: Bearer ' . generateJWT()
+        'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
     ));
     $response = curl_exec($ch);
     $response = json_decode($response);
