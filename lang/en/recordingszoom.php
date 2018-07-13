@@ -28,13 +28,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$$string['modulename'] = 'Grabaciones Zoom';
+$string['modulename'] = 'Grabaciones Zoom';
 $string['modulenameplural'] = 'Grabaciones Zoom Vinculadas';
 $string['modulename_help'] = 'Use este modulo para vincular las grabaciones de reuniones Zoom a su curso | El modulo permite vincular y listar las grabaciones de una reunión Zoom mediante el ID de reunión';
 $string['recordingszoom:addinstance'] = 'Adicionar nuevas grabaciones Zoom';
 $string['recordingszoom:submit'] = 'Enviar Grabaciones Zoom';
 $string['recordingszoom:view'] = 'Ver Grabaciones Zoom';
-$string['recordingszoomname'] = 'Tema';
+$string['recordingszoomname'] = 'Topic';
 $string['recordingszoomname_help'] = 'Tema asociado con la reunión de zoom y el aula moodle.';
 $string['recordingszoom'] = 'Grabaciones Zoom';
 $string['pluginadministration'] = 'Administración Grabaciones Zoom';
