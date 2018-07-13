@@ -70,7 +70,11 @@ echo $OUTPUT->heading("Dos");
 
 $listusers = getUsers();
 
+echo $listusers;
+
 echo $OUTPUT->heading("Tres");
+
+
 
 echo $OUTPUT->heading($listusers);
 
