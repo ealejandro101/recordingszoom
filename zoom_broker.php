@@ -33,7 +33,7 @@ require_once(dirname(__FILE__).'/locallib.php');
 use \Firebase\JWT\JWT;
 
 
-function get_meeting_info($recordingszoom) {
+function mod_recordingszoom_get_meeting_info($recordingszoom) {
 
     
     
@@ -44,7 +44,7 @@ function get_meeting_info($recordingszoom) {
 }
 
 
-function getUsers () {
+function mod_recordingszoom_getUsers () {
     //list users endpoint GET https://api.zoom.us/v2/users
     $ch = curl_init('https://api.zoom.us/v2/users');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -59,7 +59,7 @@ function getUsers () {
 
 
 //function to generate JWT
-function generateJWT () {
+function mod_recordingszoom_generateJWT () {
 
     $config = get_config('mod_zoom');
     //Zoom API credentials from https://developer.zoom.us/me/

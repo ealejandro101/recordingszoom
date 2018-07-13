@@ -68,7 +68,7 @@ echo $OUTPUT->heading("Uno");
 
 echo $OUTPUT->heading("Dos");
 
-$listusers = getUsers();
+$listusers = mod_recordingszoom_getUsers();
 
 echo $listusers;
 
