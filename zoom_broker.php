@@ -54,6 +54,7 @@ function mod_recordingszoom_getUsers () {
     ));
     $response = curl_exec($ch);
     $response = json_decode($response);
+    var_dump($response);
     return $response;
 }
 
