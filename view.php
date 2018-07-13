@@ -78,18 +78,29 @@ $host_id = $zoommeeting->host_id;
 // Retrieve List all the recordings with zoom v2 API
 $zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id );
 
-var_dump($zoomlistmeetings_with_recordings);
-
-
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_view';
 
 $table->align = array('center', 'left');
-$numcolumns = 5;
+$numcolumns = 4;
 
+foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
+    
 
+    $topic = new html_table_cell($meeting_recording->topic);
+    $topic->header = true;
+    
+    $start_time = new html_table_cell($meeting_recording->start_time);
+    $start_time->header = true;
 
+    $duration = new html_table_cell($meeting_recording->duration);
+    $duration->header = true;
 
+    $play_url = new html_table_cell($meeting_recording->recording_files);
+    $play_url->header = true;
+
+    $table->data[] = array($title,$start_time, $duration, $play_url );
+}
 
 
 
