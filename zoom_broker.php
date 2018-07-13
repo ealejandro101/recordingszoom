@@ -64,8 +64,8 @@ function mod_recordingszoom_generateJWT () {
 
     $config = get_config('mod_zoom');
     //Zoom API credentials from https://developer.zoom.us/me/
-    $key = '<zoom_api_key>';
-    $secret = '<zoom_api_secret>';
+    $key = 'aA2E7fyITcCmKTcesXADzQ';
+    $secret = 'pNHSULXLDYqC2VNWrz2foxSY8g5792sw5XeJ';
     $token = array(
         "iss" => $key,
         // The benefit of JWT is expiry tokens, we'll set this one to expire in 1 minute
