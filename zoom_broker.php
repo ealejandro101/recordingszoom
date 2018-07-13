@@ -98,10 +98,15 @@ function mod_recordingszoom_getUsers () {
 //function to generate JWT
 function mod_recordingszoom_generateJWT () {
 
-    $config = get_config('mod_zoom');
-    //Zoom API credentials from https://developer.zoom.us/me/
-    $key = 'aA2E7fyITcCmKTcesXADzQ';
-    $secret = 'pNHSULXLDYqC2VNWrz2foxSY8g5792sw5XeJ';
+    $config = get_config('mod_recordingszoom');
+
+    if (!isset($config->apiurl) || !isset($config->apikey) || !isset($config->apisecret)) {
+        // Give error.
+        throw new moodle_exception('errorapikeynotfound', 'mod_recordingszoom');
+    }
+ 
+    $key = $config->apikey;
+    $secret = $config->apisecret;
     $token = array(
         "iss" => $key,
         // The benefit of JWT is expiry tokens, we'll set this one to expire in 1 minute

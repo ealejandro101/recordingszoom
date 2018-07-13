@@ -99,8 +99,6 @@ $play_url->header = true;
 
 $table->data[] = array($topic, $start_time, $duration, $play_url );
 
-
-
 foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
 
     $topic = new html_table_cell($meeting_recording->topic);
