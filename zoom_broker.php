@@ -46,6 +46,8 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
     ));
     $response = curl_exec($ch);
+    var_dump($response);
+
     $response = json_decode($response);
     return $response;
 }
