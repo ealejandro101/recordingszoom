@@ -40,7 +40,7 @@ $event->add_record_snapshot($PAGE->cm->modname, $recordingszoom);
 $event->trigger();
 
 
-$strpagetitle = get_string('pagetitle', 'recordingszoom');
+$strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
 $strtopic = get_string('topic', 'recordingszoom');
 
 
