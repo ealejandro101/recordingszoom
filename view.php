@@ -40,9 +40,11 @@ $event->add_record_snapshot($PAGE->cm->modname, $recordingszoom);
 $event->trigger();
 
 
-$strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
-$strtopic = get_string('topic', 'recordingszoom');
-
+$strpagetitle = 'Lista de grabaciones vinculadas con reunión de Zoom';
+$strtopic = 'Tema';
+$strstarttime = 'Fecha de inicio';
+$strduration =  'Duracion';
+$strplayurl = 'Url de reproducción';
 
 // Print the page header.
 $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
@@ -96,13 +98,13 @@ $numcolumns = 4;
 $topic = new html_table_cell( $strtopic );
 $topic->header = true;
 
-$start_time = new html_table_cell(get_string('start_time', 'recordingszoom'));
+$start_time = new html_table_cell($strstarttime);
 $start_time->header = true;
 
-$duration = new html_table_cell(get_string('duration', 'recordingszoom'));
+$duration = new html_table_cell( $strduration );
 $duration->header = true;
 
-$play_url = new html_table_cell(get_string('play_url', 'recordingszoom'));
+$play_url = new html_table_cell( $strplayurl);
 $play_url->header = true;
 
 $table->data[] = array($topic, $start_time, $duration, $play_url );
