@@ -45,6 +45,7 @@ $strtopic = 'Tema';
 $strstarttime = 'Fecha de inicio';
 $strduration =  'Duracion';
 $strplayurl = 'Url de reproducción';
+$strtitulodelalista = 'Lista de grabaciones para la reunión ' . $recordingszoom->zoom_meeting_id;
 
 // Print the page header.
 $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
@@ -58,28 +59,10 @@ $PAGE->set_cacheable(false);
  * $PAGE->add_body_class('recordingszoom-'.$somevar);
  */
 
-// Output starts here.
-
-
-
-
-
-echo $OUTPUT->header();
-
-// Conditions to show the intro can change to look for own settings or whatever.
-if ($recordingszoom->intro) {
-    echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
-}
 
 // Retrieve a meeting information with zoom v2 API
 $zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
-
-echo $OUTPUT->heading(format_string('Lista de grabaciones para la reunión ' . $recordingszoom->zoom_meeting_id), 2);
-
-
 $host_id = $zoommeeting->host_id;
-
-
 /** 
  * ToDo - Validación que el host_id este matriculado como profesor del curso
  * Consultar el email_zoom del usuario con el host_id
@@ -88,6 +71,18 @@ $host_id = $zoommeeting->host_id;
 
 // Retrieve List all the recordings with zoom v2 API
 $zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id );
+
+
+// Output starts here.
+
+echo $OUTPUT->header();
+
+// Conditions to show the intro can change to look for own settings or whatever.
+if ($recordingszoom->intro) {
+    echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
+}
+
+echo $OUTPUT->heading(format_string( $strtitulodelalista ), 2);
 
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_view';
@@ -114,14 +109,24 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     $topic = new html_table_cell($meeting_recording->topic);
     $start_time = new html_table_cell($meeting_recording->start_time);
     $duration = new html_table_cell($meeting_recording->duration);
-    $url_file_recording_mp4 = "";
+    // Tabla interior con lista de botones para ver grabación
+    $table_url_file_recording_mp4 = new html_table();
+    $table_url_file_recording_mp4->attributes['class'] = 'generaltable';
+    $table_url_file_recording_mp4->align = array('center', 'left');
+    
     foreach($meeting_recording->recording_files as $file_recording){
         if($file_recording->file_type == "MP4"){
-            $url_file_recording_mp4 = $url_file_recording_mp4 . " - " . $file_recording->play_url;
+            $buttonhtml = html_writer::tag('button', $strvergrabacion, array('type' => 'submit', 'class' => 'btn btn-primary'));
+            $aurl = new moodle_url('/mod/zoom/loadmeeting.php', array('zoomplayredirect' => $file_recording->play_url ));
+            $buttonhtml .= html_writer::input_hidden_params($aurl);
+            $link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring()));
+
+            $cell_play_url_button  = new html_table_cell($link);
+            $table_url_file_recording_mp4->data[] =  array($cell_play_url_button);
         }
     }
     // Todo, que hacer si no hay MP4?
-    $play_url = new html_table_cell($url_file_recording_mp4);
+    $play_url = new html_table_cell($table_url_file_recording_mp4);
 
     $table->data[] = array($topic, $start_time, $duration, $play_url );
 }
