@@ -44,7 +44,7 @@ $strpagetitle = 'Lista de grabaciones vinculadas con reunión de Zoom';
 $strtopic = 'Tema';
 $strstarttime = 'Fecha de inicio';
 $strduration =  'Duracion';
-$strplayurl = 'Url de reproducción';
+$strplayurl = 'Acción';
 $strtitulodelalista = 'Lista de grabaciones para la reunión ' . $recordingszoom->zoom_meeting_id;
 $strplayrecording = 'Ver grabación';
 // Print the page header.
@@ -111,7 +111,7 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     $duration = new html_table_cell($meeting_recording->duration);
     // Tabla interior con lista de botones para ver grabación
     $table_url_file_recording_mp4 = new html_table();
-    $table_url_file_recording_mp4->attributes['class'] = 'generaltable';
+    // Todo, revisar el estilo de la subtabla $table_url_file_recording_mp4->attributes['class'] = 'generaltable';
     $table_url_file_recording_mp4->align = array('center', 'left');
     
     foreach($meeting_recording->recording_files as $file_recording){
