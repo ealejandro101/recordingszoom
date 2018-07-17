@@ -54,8 +54,7 @@ $capabilities = array(
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
             'manager' => CAP_ALLOW
-        ),
-        'clonepermissionsfrom' => 'moodle/course:manageactivities'
+        )
     ),
 
     'mod/recordingszoom:view' => array(
@@ -63,7 +62,10 @@ $capabilities = array(
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
             'guest' => CAP_ALLOW,
-            'user' => CAP_ALLOW,
+            'student' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
         )
     ),
 
