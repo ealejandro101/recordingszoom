@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
 
-    $settings = new admin_settingpage('modsettingrecordingszoom', get_string('pluginname', 'mod_recordingszoom'));
+    $settings = new admin_settingpage('modsettingrecordingszoom', get_string('modulename', 'mod_recordingszoom'));
 
     $apiurl = new admin_setting_configtext('mod_recordingszoom/apiurl', get_string('apiurl', 'mod_recordingszoom'),
             get_string('apiurl_desc', 'mod_recordingszoom'), 'https://api.zoom.us/v2/', PARAM_URL);
