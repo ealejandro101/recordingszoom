@@ -51,13 +51,9 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $context = context_module::instance($this->_cm->id);
-        if (!has_capability('mod/recordingszoom:addinstance', $context)) {
-            print_error('nopermissiontoviewforum');
-        } else {
+        
+        
 
-
-            
             // Adding the standard "name" field, meeting zoom topic.
             $mform->addElement('text', 'name', get_string('recordingszoomname', 'mod_recordingszoom'), array('size' => '64'));
             if (!empty($CFG->formatstringstriptags)) {
@@ -93,6 +89,6 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
 
             // Add standard buttons, common to all modules.
             $this->add_action_buttons();
-        }
+        
     }
 }
