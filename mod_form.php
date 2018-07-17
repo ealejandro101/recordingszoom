@@ -68,16 +68,18 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
-        $context = context_module::instance($this->_cm->id);
-        $ismanager = has_capability('mod/recordingszoom:edit', $context);
-        if($ismanager){
-            // Adicionar el zoom id
-            $mform->addElement('text', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
-            $mform->setType('zoom_meeting_id', PARAM_INT);
-            $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
-            $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
-        } else {
-            $mform->addElement('static', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
+        if (!empty($this->_cm)) {
+            $context = context_module::instance($this->_cm->id);
+            $ismanager = has_capability('mod/recordingszoom:edit', $context);
+            if($ismanager){
+                // Adicionar el zoom id
+                $mform->addElement('text', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
+                $mform->setType('zoom_meeting_id', PARAM_INT);
+                $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+                $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
+            } else {
+                $mform->addElement('static', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
+            }
         }
 
 
