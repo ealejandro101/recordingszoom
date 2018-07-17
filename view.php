@@ -118,7 +118,7 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
         if($file_recording->file_type == "MP4"){
 
             $buttonhtml = html_writer::tag('button', $strplayrecording, array('type' => 'submit', 'class' => 'btn btn-primary'));
-            $aurl = new moodle_url('/mod/recordingszoom/loadmeeting.php', array('zoomplayredirect' => $file_recording->play_url ));
+            $aurl = new moodle_url('/mod/recordingszoom/loadmeeting.php', array('id' => $cm->id, 'zoomplayredirect' => $file_recording->play_url));
             $buttonhtml .= html_writer::input_hidden_params($aurl);
             $link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring()));
 
