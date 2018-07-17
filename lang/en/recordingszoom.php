@@ -50,5 +50,8 @@ $string['fechainicialbusqueda'] = 'Fecha inicial de busqueda';
 $string['topic'] = 'Tema';
 $string['starttime'] = 'Fecha de inicio';
 $string['duration'] = 'Duración';
+$string['accion'] = 'Acción';
 $string['playurl'] = 'Url de reproducción';
+$string['titulodelalista'] = 'Lista de grabaciones para: ' ;
+$string['playrecording'] = 'Ver grabación' ;
 
