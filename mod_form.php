@@ -84,7 +84,6 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
             $mform->addElement('static', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
         }
 
-
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
         $mform->setDefault('grade', false);
