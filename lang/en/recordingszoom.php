@@ -30,6 +30,7 @@ $string['modulename'] = 'Grabaciones Zoom';
 $string['modulenameplural'] = 'Grabaciones Zoom Vinculadas';
 $string['modulename_help'] = 'Use este modulo para vincular las grabaciones de reuniones Zoom a su curso | El modulo permite vincular y listar las grabaciones de una reunión Zoom mediante el ID de reunión';
 $string['apiurl'] = 'Zoom URL Api';
+$string['apiurl_desc'] = 'URL entregada por Zoom para los servicios del API';
 $string['apikey'] = 'Zoom apikey';
 $string['apisecret'] = 'Zoom apisecret';
 $string['pagetitle'] = 'Lista de grabaciones vinculadas con reunión de Zoom';
