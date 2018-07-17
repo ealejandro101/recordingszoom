@@ -116,13 +116,14 @@ foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
     
     foreach($meeting_recording->recording_files as $file_recording){
         if($file_recording->file_type == "MP4"){
-            $link = html_writer::link('Ver grabación', $file_recording->play_url);
+            //$link = html_writer::link('Ver grabación', $file_recording->play_url);
+            $link = 'Ver grabación '. $file_recording->play_url;
             $cell_play_url_button  = new html_table_cell($link);
             $table_url_file_recording_mp4->data[] =  array($cell_play_url_button);
         }
     }
     // Todo, que hacer si no hay MP4?
-    $play_url = new html_table_cell($table_url_file_recording_mp4);
+    $play_url = new html_table_cell( html_writer::table($table_url_file_recording_mp4) );
 
     $table->data[] = array($topic, $start_time, $duration, $play_url );
 }
