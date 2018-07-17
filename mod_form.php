@@ -50,7 +50,7 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field, meeting zoom topic.
-        $mform->addElement('text', 'name', get_string('recordingszoomname', 'recordingszoom'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('recordingszoomname', 'mod_recordingszoom'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -74,10 +74,6 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
         $mform->addRule('zoom_meeting_id', get_string('falla_zoom_meeting_id', 'recordingszoom'), 'required', null, 'client');
         $mform->addHelpButton('zoom_meeting_id', 'zoom_meeting_id', 'recordingszoom');
 
-
-        // fechainicialbusqueda.
-        $mform->addElement('date_time_selector', 'fechainicialbusqueda', get_string('fechainicialbusqueda', 'recordingszoom'));
-        $mform->addHelpButton('fechainicialbusqueda', 'fechainicialbusqueda', 'recordingszoom');
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
