@@ -43,47 +43,55 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
      */
     public function definition() {
         global $CFG;
+        global $USER;
 
+        
         $mform = $this->_form;
 
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        
-        // Adding the standard "name" field, meeting zoom topic.
-        $mform->addElement('text', 'name', get_string('recordingszoomname', 'mod_recordingszoom'), array('size' => '64'));
-        if (!empty($CFG->formatstringstriptags)) {
-            $mform->setType('name', PARAM_TEXT);
+        if( !is_siteadmin( $USER) ){
+
         } else {
-            $mform->setType('name', PARAM_CLEANHTML);
+
+
+            
+            // Adding the standard "name" field, meeting zoom topic.
+            $mform->addElement('text', 'name', get_string('recordingszoomname', 'mod_recordingszoom'), array('size' => '64'));
+            if (!empty($CFG->formatstringstriptags)) {
+                $mform->setType('name', PARAM_TEXT);
+            } else {
+                $mform->setType('name', PARAM_CLEANHTML);
+            }
+            $mform->addRule('name', null, 'required', null, 'client');
+            $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+            $mform->addHelpButton('name', 'recordingszoomname', 'recordingszoom');
+
+            // Adding the standard "intro" and "introformat" fields.
+            if ($CFG->branch >= 29) {
+                $this->standard_intro_elements();
+            } else {
+                $this->add_intro_editor();
+            }
+
+            
+            // Adicionar el zoom id
+            $mform->addElement('text', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
+            $mform->setType('zoom_meeting_id', PARAM_INT);
+            $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+            $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
+
+
+            // Add standard grading elements.
+            $this->standard_grading_coursemodule_elements();
+            $mform->setDefault('grade', false);
+
+            // Add standard elements, common to all modules.
+            $this->standard_coursemodule_elements();
+
+            // Add standard buttons, common to all modules.
+            $this->add_action_buttons();
         }
-        $mform->addRule('name', null, 'required', null, 'client');
-        $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'recordingszoomname', 'recordingszoom');
-
-        // Adding the standard "intro" and "introformat" fields.
-        if ($CFG->branch >= 29) {
-            $this->standard_intro_elements();
-        } else {
-            $this->add_intro_editor();
-        }
-
-        
-        // Adicionar el zoom id
-        $mform->addElement('text', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
-        $mform->setType('zoom_meeting_id', PARAM_INT);
-        $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
-        $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
-
-
-        // Add standard grading elements.
-        $this->standard_grading_coursemodule_elements();
-        $mform->setDefault('grade', false);
-
-        // Add standard elements, common to all modules.
-        $this->standard_coursemodule_elements();
-
-        // Add standard buttons, common to all modules.
-        $this->add_action_buttons();
     }
 }
