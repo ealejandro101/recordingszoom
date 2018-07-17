@@ -40,13 +40,33 @@ $event->add_record_snapshot($PAGE->cm->modname, $recordingszoom);
 $event->trigger();
 
 
-$strpagetitle = 'Lista de grabaciones vinculadas con reunión de Zoom';
-$strtopic = 'Tema';
-$strstarttime = 'Fecha de inicio';
-$strduration =  'Duracion';
-$strplayurl = 'Acción';
-$strtitulodelalista = 'Lista de grabaciones para la reunión ' . $recordingszoom->zoom_meeting_id;
-$strplayrecording = 'Ver grabación';
+/**
+ * Consulta de información utilizando las funciones en el broker
+ */
+// Retrieve a meeting information with zoom v2 API
+$zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
+$host_id = $zoommeeting->host_id;
+/** 
+ * ToDo - Validación que el host_id este matriculado como profesor del curso
+ * Consultar el email_zoom del usuario con el host_id
+ * Buscar en los profesores del curso el email_zoom
+ * */
+// Retrieve List all the recordings with zoom v2 API
+$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id );
+
+
+
+/**
+ * Cadenas utilizadas para el idioma
+ */
+$strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
+$strtopic = get_string('topic', 'mod_recordingszoom');
+$strstarttime =  get_string('starttime', 'mod_recordingszoom');
+$strduration =  get_string('duration', 'mod_recordingszoom');
+$straccion = get_string('accion', 'mod_recordingszoom');
+$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom') . $zoommeeting->topic . ' - ' . $recordingszoom->zoom_meeting_id;
+$strplayrecording = get_string('playrecording', 'mod_recordingszoom');
+
 // Print the page header.
 $PAGE->set_url('/mod/recordingszoom/view.php', array('id' => $cm->id));
 $PAGE->set_title( $strpagetitle );
@@ -59,20 +79,6 @@ $PAGE->set_cacheable(false);
  * $PAGE->add_body_class('recordingszoom-'.$somevar);
  */
 
-
-// Retrieve a meeting information with zoom v2 API
-$zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
-$host_id = $zoommeeting->host_id;
-/** 
- * ToDo - Validación que el host_id este matriculado como profesor del curso
- * Consultar el email_zoom del usuario con el host_id
- * Buscar en los profesores del curso el email_zoom
- * */
-
-// Retrieve List all the recordings with zoom v2 API
-$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id );
-
-
 // Output starts here.
 
 echo $OUTPUT->header();
@@ -82,7 +88,7 @@ if ($recordingszoom->intro) {
     echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
 }
 
-echo $OUTPUT->heading(format_string( $strtitulodelalista ), 2);
+echo $OUTPUT->heading(format_string( $strtitulodelalista ), 3);
 
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_view';
@@ -99,7 +105,7 @@ $start_time->header = true;
 $duration = new html_table_cell( $strduration );
 $duration->header = true;
 
-$play_url = new html_table_cell( $strplayurl);
+$play_url = new html_table_cell( $straccion);
 $play_url->header = true;
 
 $table->data[] = array($topic, $start_time, $duration, $play_url );
