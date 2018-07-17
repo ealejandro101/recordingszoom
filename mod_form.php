@@ -51,8 +51,8 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        if( !is_siteadmin(null) ){
-
+        if (!has_capability('mod/forum:viewforum', $context)) {
+            print_error('nopermissiontoviewforum');
         } else {
 
 
