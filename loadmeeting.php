@@ -32,7 +32,7 @@ require_once(dirname(__FILE__).'/locallib.php');
 
 list($course, $cm, $recordingszoom) = recordingszoom_get_instance_setup();
 
-$zoomplayredirect = required_param('zoomplayredirect', PARAM_STRING); // zoom play redirect.
+$zoomplayredirect = required_param('zoomplayredirect', PARAM_URL); // zoom play redirect.
 
 $PAGE->set_context($context);
 
