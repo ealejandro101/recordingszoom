@@ -46,9 +46,27 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Modify capabilities as needed and remove this comment.
+
 $capabilities = array(
     'mod/recordingszoom:addinstance' => array(
+        'riskbitmask' => RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    'mod/recordingszoom:edit' => array(
+        'riskbitmask' => RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    'mod/recordingszoom:update' => array(
         'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
