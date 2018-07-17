@@ -69,10 +69,10 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
 
         
         // Adicionar el zoom id
-        $mform->addElement('text', 'zoom_meeting_id', get_string('zoom_meeting_id', 'recordingszoom'), array('size' == '10'));
+        $mform->addElement('text', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
         $mform->setType('zoom_meeting_id', PARAM_INT);
-        $mform->addRule('zoom_meeting_id', get_string('falla_zoom_meeting_id', 'recordingszoom'), 'required', null, 'client');
-        $mform->addHelpButton('zoom_meeting_id', 'zoom_meeting_id', 'recordingszoom');
+        $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+        $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
 
 
         // Add standard grading elements.
