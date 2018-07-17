@@ -56,5 +56,5 @@ if (!empty($gradelist->items) && empty($gradelist->items[0]->grades[$USER->id]->
 }
 
 // Redirect user to play zoom meeting.
-$joinurl = new moodle_url($zoomplayredirect, array('uname' => fullname($USER)));
+$joinurl = new moodle_url($zoomplayredirect);
 redirect($joinurl);
