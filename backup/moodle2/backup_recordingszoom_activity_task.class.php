@@ -63,11 +63,11 @@ class backup_recordingszoom_activity_task extends backup_activity_task {
 
         // Link to the list of recordingszooms.
         $search = '/('.$base.'\/mod\/recordingszoom\/index.php\?id\=)([0-9]+)/';
-        $content = preg_replace($search, '$@recordingszoomINDEX*$2@$', $content);
+        $content = preg_replace($search, '$@RECORDINGSZOOMINDEX*$2@$', $content);
 
         // Link to recordingszoom view by moduleid.
         $search = '/('.$base.'\/mod\/recordingszoom\/view.php\?id\=)([0-9]+)/';
-        $content = preg_replace($search, '$@recordingszoomVIEWBYID*$2@$', $content);
+        $content = preg_replace($search, '$@RECORDINGSZOOMVIEWBYID*$2@$', $content);
 
         return $content;
     }
