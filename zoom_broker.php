@@ -33,11 +33,14 @@ require_once(dirname(__FILE__).'/locallib.php');
 use \MyFirebase\JWT\JWT;
 
 
+/**
+ * Función para consultar todas las grabaciones de un usuario en particular
+ * y luego filtrar las grabaciones que corresponden con el id de reunion original
+ * Pueden ser muchas grabaciones y solo algunas de la reunión que estamos buscando
+ */
+function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id, $ffrom, $fto ) {
 
-function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id) {
-    $fi = '2018-07-01';
-    $ff = '2018-07-13';
-    $serviceurl = 'https://api.zoom.us/v2/users/' . $host_id . '/' . 'recordings' . '?from=' . $fi . '&to=' . $ff;
+    $serviceurl = 'https://api.zoom.us/v2/users/' . $host_id . '/' . 'recordings' . '?from=' . $ffrom . '&to=' . $fto;
     
     $ch = curl_init($serviceurl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -48,19 +51,23 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
     $response = curl_exec($ch);
     
     $meetings_recordings = array();
+
+    // recorrido para la primera pagina entregada, en caso de tener más páginas se debe consultar nuevamente
     if( $response->next_page_token == ''){
-        
+
         $response = json_decode($response);
         $todas_meetings = $response->meetings;
         
-        foreach ($todas_meetings as $meeting) {
-            if($meeting->id == $recordingszoom->zoom_meeting_id) {
+        // Recorrido de las meetings en la respuesta
+        foreach ($todas_meetings as $meeting) { 
+            // Solo se tiene en cuenta las grabaciones que son de la reunion inicial 
+            if($meeting->id == $recordingszoom->zoom_meeting_id) { 
                 $meetings_recordings[] = $meeting;
             } 
         }
     } else {
         // Todo hay que ir por otra pagina
-        echo "estaba vacio";
+        echo "Existe otra pagina";
     }
     return $meetings_recordings;
 }
