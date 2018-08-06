@@ -38,7 +38,7 @@ use \MyFirebase\JWT\JWT;
  * y luego filtrar las grabaciones que corresponden con el id de reunion original
  * Pueden ser muchas grabaciones y solo algunas de la reunión que estamos buscando
  */
-function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id, $ffrom, $fto ) {
+function mod_recordingszoom_get_user_cloudrecordings_list($all_zoom_meeting_ids, $host_id, $ffrom, $fto ) {
 
     $serviceurl = 'https://api.zoom.us/v2/users/' . $host_id . '/' . 'recordings' . '?from=' . $ffrom . '&to=' . $fto;
     
@@ -61,7 +61,7 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
         // Recorrido de las meetings en la respuesta
         foreach ($todas_meetings as $meeting) { 
             // Solo se tiene en cuenta las grabaciones que son de la reunion inicial 
-            if($meeting->id == $recordingszoom->zoom_meeting_id) { 
+            if( in_array($meeting->id, $all_zoom_meeting_ids) ) { 
                 $meetings_recordings[] = $meeting;
             } 
         }
@@ -73,10 +73,41 @@ function mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host
 }
 
 
+/**
+ * Función para consultar todas las grabaciones de un usuario en particular
+ * y luego filtrar las grabaciones que corresponden con el id de reunion original
+ * Pueden ser muchas grabaciones y solo algunas de la reunión que estamos buscando
+ */
+function mod_recordingszoom_get_cloudrecordings_list($ids_recordingszoom, $ffrom, $fto ) {
+
+    // Todos los id configurados en el modulo
+    $all_zoom_meeting_ids = explode(",", $ids_recordingszoom);
+    $all_zoom_meeting_ids = array_unique($all_zoom_meeting_ids);
+
+    //Información de todas los host_id
+    $all_host_id = array();
+
+    foreach ($all_zoom_meeting_ids as $zoom_meeting_id) { 
+        $meeting_info =  mod_recordingszoom_get_meeting_info($zoom_meeting_id);
+        $all_host_id[] = $meeting_info->host_id;
+    } 
+    $all_host_id = array_unique($all_host_id);
+
+    // Información de todas las grabaciones que cumplen con el criterio
+    $all_meetings_recordings = array();
+    foreach ($all_host_id as $host_id) {
+        $new_meetings_recordings = mod_recordingszoom_get_user_cloudrecordings_list($all_zoom_meeting_ids, $host_id, $ffrom, $fto );
+        $all_meetings_recordings = array_merge($all_meetings_recordings, $new_meetings_recordings);
+    }
+
+    return $all_meetings_recordings;
+}
 
 
-function mod_recordingszoom_get_meeting_info($recordingszoom) {
-    $ch = curl_init('https://api.zoom.us/v2/meetings/' . $recordingszoom->zoom_meeting_id);
+
+
+function mod_recordingszoom_get_meeting_info($zoom_meeting_id) {
+    $ch = curl_init('https://api.zoom.us/v2/meetings/' . $zoom_meeting_id);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // add token to the authorization header
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(

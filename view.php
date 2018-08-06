@@ -68,21 +68,17 @@ $PAGE->set_cacheable(false);
  */
 
 
-/**
- * Consulta de información utilizando las funciones en el broker
- */
-// Retrieve a meeting information with zoom v2 API
-$zoommeeting = mod_recordingszoom_get_meeting_info($recordingszoom);
-$host_id = $zoommeeting->host_id;
-$created = date_parse($zoommeeting->created_at);
-
  /**
   * Obteniendo los datos pasados por GET en la URL o defecto de busqueda
   */
+$date_now = date('Y-m-d');
+$date_past = strtotime('-30 day', strtotime($date_now));
+$date_past = date('Y-m-d', $date_past);
 $now = getdate();
 $now['month'] = $now['mon'];
 $now['day'] = $now['mday'];
-$from = optional_param_array('from', $created, PARAM_INT);
+
+$from = optional_param_array('from', $date_past, PARAM_INT);
 $to = optional_param_array('to', $now, PARAM_INT);
 $ffrom = sprintf('%u-%u-%u', $from['year'], $from['month'], $from['day']);
 $fto = sprintf('%u-%u-%u', $to['year'], $to['month'], $to['day']);
@@ -92,8 +88,11 @@ $fto = sprintf('%u-%u-%u', $to['year'], $to['month'], $to['day']);
  * Consultar el email_zoom del usuario con el host_id
  * Buscar en los profesores del curso el email_zoom
  * */
+/**
+ * Consulta de información utilizando las funciones en el broker
+ */
 // Retrieve List all the recordings with zoom v2 API
-$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_user_cloudrecordings_list($recordingszoom, $host_id, $ffrom, $fto );
+$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_cloudrecordings_list($recordingszoom->zoom_meeting_id,  $ffrom, $fto );
 
 // Output starts here.
 
