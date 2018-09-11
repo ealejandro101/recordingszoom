@@ -80,8 +80,30 @@ class mod_recordingszoom_mod_form extends moodleform_mod {
             $mform->setType('zoom_meeting_id', PARAM_INT);
             $mform->addRule('zoom_meeting_id', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
             $mform->addHelpButton('zoom_meeting_id', 'zoommeetingid', 'recordingszoom');
+
+            // Adicionar el zoom id 2
+            $mform->addElement('text', 'zoom_meeting_id_2', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
+            $mform->setType('zoom_meeting_id_2', PARAM_INT);
+            $mform->addRule('zoom_meeting_id_2', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+            $mform->addHelpButton('zoom_meeting_id_2', 'zoommeetingid', 'recordingszoom');
+
+            // Adicionar el zoom id 3
+            $mform->addElement('text', 'zoom_meeting_id_3', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
+            $mform->setType('zoom_meeting_id_3', PARAM_INT);
+            $mform->addRule('zoom_meeting_id_3', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+            $mform->addHelpButton('zoom_meeting_id_3', 'zoommeetingid', 'recordingszoom');
+
+            // Adicionar el zoom id 4
+            $mform->addElement('text', 'zoom_meeting_id_4', get_string('zoommeetingid', 'recordingszoom'), array('size' == '10'));
+            $mform->setType('zoom_meeting_id_4', PARAM_INT);
+            $mform->addRule('zoom_meeting_id_4', get_string('falla_zoommeetingid', 'recordingszoom'), 'required', null, 'client');
+            $mform->addHelpButton('zoom_meeting_id_4', 'zoommeetingid', 'recordingszoom');
+
         } else {
             $mform->addElement('static', 'zoom_meeting_id', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
+            $mform->addElement('static', 'zoom_meeting_id_2', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
+            $mform->addElement('static', 'zoom_meeting_id_3', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
+            $mform->addElement('static', 'zoom_meeting_id_4', get_string('zoommeetingid', 'recordingszoom'), get_string('zoommeetingid_desc', 'recordingszoom'));
         }
 
         // Add standard grading elements.

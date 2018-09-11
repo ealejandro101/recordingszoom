@@ -15,6 +15,9 @@
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="100" SEQUENCE="false" COMMENT="The maximum grade. Can be negative to indicate the use of a scale."/>
         <FIELD NAME="zoom_meeting_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="IDs meetings de Zoom vinculadas a este curso."/>
+        <FIELD NAME="zoom_meeting_id_2" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="IDs meetings de Zoom vinculadas a este curso."/>
+        <FIELD NAME="zoom_meeting_id_3" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="IDs meetings de Zoom vinculadas a este curso."/>
+        <FIELD NAME="zoom_meeting_id_4" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="IDs meetings de Zoom vinculadas a este curso."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -22,6 +25,9 @@
       <INDEXES>
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
         <INDEX NAME="zoom_meeting_id_idx" UNIQUE="false" FIELDS="zoom_meeting_id"/>
+        <INDEX NAME="zoom_meeting_id_idx_2" UNIQUE="false" FIELDS="zoom_meeting_id_2"/>
+        <INDEX NAME="zoom_meeting_id_idx_3" UNIQUE="false" FIELDS="zoom_meeting_id_3"/>
+        <INDEX NAME="zoom_meeting_id_idx_4" UNIQUE="false" FIELDS="zoom_meeting_id_4"/>
       </INDEXES>
     </TABLE>
   </TABLES>
