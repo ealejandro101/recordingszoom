@@ -73,7 +73,7 @@ function xmldb_recordingszoom_upgrade($oldversion) {
         ///////////
         // Define field course to be added to recordingszoom.
         $table = new xmldb_table('recordingszoom');
-        $field = new xmldb_field('zoom_meeting_id_2', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, true, null, null);
+        $field = new xmldb_field('zoom_meeting_id_2', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL , null, null);
         // Add field course.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
@@ -89,7 +89,7 @@ function xmldb_recordingszoom_upgrade($oldversion) {
         ///////////
         // Define field course to be added to recordingszoom.
         $table = new xmldb_table('recordingszoom');
-        $field = new xmldb_field('zoom_meeting_id_3', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, true, null, null);
+        $field = new xmldb_field('zoom_meeting_id_3', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null);
         // Add field course.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
@@ -106,7 +106,7 @@ function xmldb_recordingszoom_upgrade($oldversion) {
         ///////////
         // Define field course to be added to recordingszoom.
         $table = new xmldb_table('recordingszoom');
-        $field = new xmldb_field('zoom_meeting_id_4', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, true, null, null);
+        $field = new xmldb_field('zoom_meeting_id_4', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null);
         // Add field course.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
