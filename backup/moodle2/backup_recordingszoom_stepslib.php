@@ -47,7 +47,7 @@ class backup_recordingszoom_activity_structure_step extends backup_activity_stru
 
         // Define the root element describing the recordingszoom instance.
         $recordingszoom = new backup_nested_element('recordingszoom', array('id'), array(
-            'name', 'intro', 'introformat', 'grade'));
+            'course','name', 'intro', 'introformat','timecreated','timemodified', 'grade','zoom_meeting_id','zoom_meeting_id_2','zoom_meeting_id_3','zoom_meeting_id_4'));
 
         // If we had more elements, we would build the tree here.
 
