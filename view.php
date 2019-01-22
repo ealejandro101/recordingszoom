@@ -49,7 +49,7 @@ $strtopic = get_string('topic', 'mod_recordingszoom');
 $strstarttime =  get_string('starttime', 'mod_recordingszoom');
 $strduration =  get_string('duration', 'mod_recordingszoom');
 $straccion = get_string('accion', 'mod_recordingszoom');
-$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom') . $zoommeeting->topic . ' - ' . $recordingszoom->zoom_meeting_id;
+$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom') . $recordingszoom->name . ' - ' . $recordingszoom->zoom_meeting_id;
 $strplayrecording = get_string('playrecording', 'mod_recordingszoom');
 $strerr_long_timeframe = get_string('err_long_timeframe', 'mod_recordingszoom');
 
@@ -71,9 +71,12 @@ $PAGE->set_cacheable(false);
  /**
   * Obteniendo los datos pasados por GET en la URL o defecto de busqueda
   */
-$date_now = date('Y-m-d');
-$date_past = strtotime('-30 day', strtotime($date_now));
-$date_past = date('Y-m-d', $date_past);
+
+$date_past = strtotime('-30 day');
+$date_past = getdate($date_past);
+$date_past['month'] = $date_past['mon'];
+$date_past['day'] = $date_past['mday'];
+
 $now = getdate();
 $now['month'] = $now['mon'];
 $now['day'] = $now['mday'];
@@ -106,13 +109,6 @@ if ($recordingszoom->intro) {
 echo $OUTPUT->heading(format_string( $strtitulodelalista ), 3);
 
 if (!empty($zoomlistmeetings_with_recordings)) {
-
-    // If the time period is longer than a month, Zoom will only return the latest month in range.
-    $resfrom = $zoomlistmeetings_with_recordings->resfrom; // From field in zoom's response.
-
-    if ($resfrom[0] != $from['year'] || $resfrom[1] != $from['month'] || $resfrom[2] != $from['day']) {
-        echo $OUTPUT->notification($strerr_long_timeframe, 'notifymessage');
-    }
 
     $table = new html_table();
     $table->attributes['class'] = 'generaltable mod_view';
@@ -171,7 +167,7 @@ echo $dateform->render();
 if (!empty($table->data)) {
     echo html_writer::table($table);
 } else {
-    echo $OUTPUT->notification(get_string('nosessions', 'mod_zoom'), 'notifymessage');
+    echo $OUTPUT->notification(get_string('nosessions', 'mod_recordingszoom'), 'notifymessage');
 }
 
 

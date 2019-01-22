@@ -49,25 +49,21 @@ function mod_recordingszoom_get_user_cloudrecordings_list($all_zoom_meeting_ids,
         'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
     ));
     $response = curl_exec($ch);
-    
+    $response = json_decode($response);
+
     $meetings_recordings = array();
 
-    // recorrido para la primera pagina entregada, en caso de tener más páginas se debe consultar nuevamente
-    if( $response->next_page_token == ''){
-
-        $response = json_decode($response);
-        $todas_meetings = $response->meetings;
-        
-        // Recorrido de las meetings en la respuesta
-        foreach ($todas_meetings as $meeting) { 
-            // Solo se tiene en cuenta las grabaciones que son de la reunion inicial 
-            if( in_array($meeting->id, $all_zoom_meeting_ids) ) { 
-                $meetings_recordings[] = $meeting;
-            } 
-        }
-    } else {
-        // Todo hay que ir por otra pagina
-        echo "Existe otra pagina";
+    if($response->total_records > 0){
+        // ToDo recorrido para la primera pagina entregada, en caso de tener más páginas se debe consultar nuevamente
+            $todas_meetings = $response->meetings;
+            
+            // Recorrido de las meetings en la respuesta
+            foreach ($todas_meetings as $meeting) { 
+                // Solo se tiene en cuenta las grabaciones que son de la reunion inicial 
+                if( in_array($meeting->id, $all_zoom_meeting_ids) ) { 
+                    $meetings_recordings[] = $meeting;
+                } 
+            }
     }
     return $meetings_recordings;
 }
@@ -128,7 +124,6 @@ function mod_recordingszoom_getUsers () {
     ));
     $response = curl_exec($ch);
     $response = json_decode($response);
-    var_dump($response);
     return $response;
 }
 

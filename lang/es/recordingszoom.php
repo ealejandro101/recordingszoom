@@ -56,3 +56,4 @@ $string['playurl'] = 'Url de reproducción';
 $string['titulodelalista'] = 'Lista de grabaciones para: ' ;
 $string['playrecording'] = 'Ver grabación' ;
 $string['err_long_timeframe'] = 'El periodo solicitado excede la posibilidad de busqueda, Solo se muestran resultados del ultimo mes.'; 
+$string['nosessions'] = 'No hay grabaciones para el periodo solicitado. Valide que el periodo sea valido o que incluya solo 30 días'; 
