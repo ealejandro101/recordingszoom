@@ -50,7 +50,6 @@ function mod_recordingszoom_get_user_cloudrecordings_list($all_zoom_meeting_ids,
     ));
     $response = curl_exec($ch);
     $response = json_decode($response);
-
     $meetings_recordings = array();
 
     if($response->total_records > 0){
@@ -84,7 +83,7 @@ function mod_recordingszoom_get_cloudrecordings_list($ids_recordingszoom, $ffrom
     $all_host_id = array();
 
     foreach ($all_zoom_meeting_ids as $zoom_meeting_id) { 
-        $meeting_info =  mod_recordingszoom_get_meeting_info($zoom_meeting_id);
+        $meeting_info =  mod_recordingszoom_get_past_meetings_info($zoom_meeting_id);
         $all_host_id[] = $meeting_info->host_id;
     } 
     $all_host_id = array_unique($all_host_id);
@@ -113,6 +112,19 @@ function mod_recordingszoom_get_meeting_info($zoom_meeting_id) {
     $response = json_decode($response);
     return $response;
 }
+
+function mod_recordingszoom_get_past_meetings_info($zoom_meeting_id) {
+    $ch = curl_init('https://api.zoom.us/v2/past_meetings/' . $zoom_meeting_id);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // add token to the authorization header
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
+    ));
+    $response = curl_exec($ch);
+    $response = json_decode($response);
+    return $response;
+}
+
 
 function mod_recordingszoom_getUsers () {
     //list users endpoint GET https://api.zoom.us/v2/users
