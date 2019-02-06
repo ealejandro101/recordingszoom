@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines the version and other meta-info about the plugin
+ * Prints a particular instance of recordingszoom
  *
- * Setting the $plugin->version to 0 prevents the plugin from being installed.
- * See https://docs.moodle.org/dev/version.php for more info.
+ * You can have a rather longer description of the file as well,
+ * if you like, and it can span multiple lines.
  *
  * @package    mod_recordingszoom
  * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
@@ -27,10 +27,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'mod_recordingszoom';
-$plugin->version = 201901010004;
-$plugin->release = 'v0.4';
-$plugin->requires = 2014051200;
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->cron = 0;
-$plugin->dependencies = array();
+$toprow = array();
+$toprow[] = new tabobject('meetinginfo', new moodle_url('/mod/recordingszoom/view.php', array('id' => $cm->id)), get_string('meetinginfo', 'mod_recordingszoom'));
+$toprow[] = new tabobject('recordinglist', new moodle_url('/mod/recordingszoom/recordinglist.php', array('id' => $cm->id)), get_string('recordinglist', 'mod_recordingszoom'));
+
+echo $OUTPUT->tabtree($toprow, $currenttab);
