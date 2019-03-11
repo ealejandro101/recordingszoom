@@ -45,11 +45,12 @@ $event->trigger();
  * Cadenas utilizadas para el idioma
  */
 $strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
+$strzoomid = get_string('zoomid', 'mod_recordingszoom');
 $strtopic = get_string('topic', 'mod_recordingszoom');
 $strstarttime =  get_string('starttime', 'mod_recordingszoom');
 $strduration =  get_string('duration', 'mod_recordingszoom');
 $straccion = get_string('accion', 'mod_recordingszoom');
-$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom') . $recordingszoom->name . ' - ' . $recordingszoom->zoom_meeting_id;
+$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom');
 $strplayrecording = get_string('playrecording', 'mod_recordingszoom');
 $strerr_long_timeframe = get_string('err_long_timeframe', 'mod_recordingszoom');
 
@@ -94,8 +95,12 @@ $fto = sprintf('%u-%u-%u', $to['year'], $to['month'], $to['day']);
 /**
  * Consulta de información utilizando las funciones en el broker
  */
+
+// Unificar los ids en un unico array
+$zoom_meetings_id_array = array($recordingszoom->zoom_meeting_id, $recordingszoom->zoom_meeting_id_2, $recordingszoom->zoom_meeting_id_3, $recordingszoom->zoom_meeting_id_4);
+
 // Retrieve List all the recordings with zoom v2 API
-$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_cloudrecordings_list($recordingszoom->zoom_meeting_id,  $ffrom, $fto );
+$zoomlistmeetings_with_recordings =  mod_recordingszoom_get_cloudrecordings_list($zoom_meetings_id_array,  $ffrom, $fto );
 
 // Output starts here.
 
@@ -108,7 +113,7 @@ if ($recordingszoom->intro) {
     echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
 }
 
-echo $OUTPUT->heading(format_string( $strtitulodelalista ), 3);
+echo $OUTPUT->heading(format_string( $strtitulodelalista ), 5);
 
 if (!empty($zoomlistmeetings_with_recordings)) {
 
@@ -116,7 +121,10 @@ if (!empty($zoomlistmeetings_with_recordings)) {
     $table->attributes['class'] = 'generaltable mod_view';
 
     $table->align = array('center', 'left');
-    $numcolumns = 4;
+    $numcolumns = 5;
+
+    $zoomid = new html_table_cell( $strzoomid );
+    $zoomid->header = true;
 
     $topic = new html_table_cell( $strtopic );
     $topic->header = true;
@@ -130,16 +138,17 @@ if (!empty($zoomlistmeetings_with_recordings)) {
     $play_url = new html_table_cell( $straccion);
     $play_url->header = true;
 
-    $table->data[] = array($topic, $start_time, $duration, $play_url );
+    $table->data[] = array($zoomid, $topic, $start_time, $duration, $play_url );
 
     foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
 
+        $zoomid = new html_table_cell($meeting_recording->id); 
         $topic = new html_table_cell($meeting_recording->topic);
         $start_time = new html_table_cell($meeting_recording->start_time);
         $duration = new html_table_cell($meeting_recording->duration);
         // Tabla interior con lista de botones para ver grabación
         $table_url_file_recording_mp4 = new html_table();
-        // Todo, revisar el estilo de la subtabla $table_url_file_recording_mp4->attributes['class'] = 'generaltable';
+        $table_url_file_recording_mp4->attributes['class'] = 'generaltable simple';
         $table_url_file_recording_mp4->align = array('center', 'left');
         
         foreach($meeting_recording->recording_files as $file_recording){
@@ -157,9 +166,8 @@ if (!empty($zoomlistmeetings_with_recordings)) {
         // Todo, que hacer si no hay MP4?
         $play_url = new html_table_cell( html_writer::table($table_url_file_recording_mp4) );
 
-        $table->data[] = array($topic, $start_time, $duration, $play_url );
+        $table->data[] = array($zoomid, $topic, $start_time, $duration, $play_url );
     }
-
 }
 
 $dateform = new mod_zoom_report_form('recordinglist.php?id='.$cm->id);

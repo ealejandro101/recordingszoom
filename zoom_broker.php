@@ -73,11 +73,10 @@ function mod_recordingszoom_get_user_cloudrecordings_list($all_zoom_meeting_ids,
  * y luego filtrar las grabaciones que corresponden con el id de reunion original
  * Pueden ser muchas grabaciones y solo algunas de la reunión que estamos buscando
  */
-function mod_recordingszoom_get_cloudrecordings_list($ids_recordingszoom, $ffrom, $fto ) {
+function mod_recordingszoom_get_cloudrecordings_list($zoom_meetings_id_array, $ffrom, $fto ) {
 
     // Todos los id configurados en el modulo
-    $all_zoom_meeting_ids = explode(",", $ids_recordingszoom);
-    $all_zoom_meeting_ids = array_unique($all_zoom_meeting_ids);
+    $all_zoom_meeting_ids = array_unique($zoom_meetings_id_array);
 
     //Información de todas los host_id
     $all_host_id = array();
