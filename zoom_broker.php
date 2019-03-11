@@ -109,9 +109,27 @@ function mod_recordingszoom_get_meeting_info($zoom_meeting_id) {
         'Authorization: Bearer ' . mod_recordingszoom_generateJWT()
     ));
     $response = curl_exec($ch);
+
+    if(curl_errno($ch)){
+        throw new moodle_exception('errorwebservice', 'mod_recordingszoom', '', $ch->error);
+    }
+
     $response = json_decode($response);
+
+    $httpstatus = curl_getinfo($ch)['http_code'];
+    if ($httpstatus >= 400) {
+        if ($response) {
+            throw new moodle_exception('errorwebservice', 'mod_recordingszoom', '', $response->message);
+        } else {
+            throw new moodle_exception('errorwebservice', 'mod_recordingszoom', '', "HTTP Status $httpstatus");
+        }
+    }
+
+
     return $response;
 }
+
+
 
 function mod_recordingszoom_get_past_meetings_info($zoom_meeting_id) {
     $ch = curl_init('https://api.zoom.us/v2/past_meetings/' . $zoom_meeting_id);

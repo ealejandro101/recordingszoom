@@ -33,6 +33,7 @@ require_once(dirname(__FILE__).'/zoom_broker.php');
 
 // Course_module ID.
 $id = required_param('id', PARAM_INT);
+$zoom_id = required_param('zoom_id', PARAM_INT);
 if ($id) {
     $cm         = get_coursemodule_from_id('recordingszoom', $id, 0, false, MUST_EXIST);
     $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -65,7 +66,12 @@ if (!empty($gradelist->items) && empty($gradelist->items[0]->grades[$USER->id]->
     recordingszoom_grade_item_update($recordingszoom, $grades);
 }
 
-$zoom = mod_recordingszoom_get_meeting_info($recordingszoom->zoom_meeting_id);
+if( !(($zoom_id == $recordingszoom->zoom_meeting_id) || ($zoom_id == $recordingszoom->zoom_meeting_id_2) || 
+    ($zoom_id == $recordingszoom->zoom_meeting_id_3) || ($zoom_id == $recordingszoom->zoom_meeting_id_4) ) ){
+        throw new moodle_exception('error', 'mod_recordingszoom', '', 'errorzoomidnovalido');
+    }
+
+$zoom = mod_recordingszoom_get_meeting_info($zoom_id);
 
 // Redirect user to play zoom meeting.
 $joinurl = new moodle_url($zoom->join_url, array('uname' => fullname($USER)));

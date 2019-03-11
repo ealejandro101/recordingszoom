@@ -29,6 +29,8 @@ require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/locallib.php');
 require_once(dirname(__FILE__).'/zoom_broker.php');
 require_once(dirname(__FILE__).'/mod_form.php');
+require_once(dirname(__FILE__).'/../../lib/moodlelib.php');
+
 
 
 list($course, $cm, $recordingszoom) = recordingszoom_get_instance_setup();
@@ -46,7 +48,10 @@ $event->trigger();
  */
 $strpagetitle = get_string('pagetitle', 'mod_recordingszoom');
 $strjoinmeeting = get_string('joinmeeting', 'mod_recordingszoom');
-$strtitulodelalista =  get_string('titulodelalista', 'mod_recordingszoom') . $recordingszoom->name . ' - ' . $recordingszoom->zoom_meeting_id;
+$strsesionesprogramadas =  get_string('sesionesprogramadas', 'mod_recordingszoom');
+$strtitulo =  get_string('titulo', 'mod_recordingszoom');
+$strdescripcion = get_string('descripcion', 'mod_recordingszoom');
+$straccion = get_string('accion', 'mod_recordingszoom');
 
 /**
  * Print the page header.
@@ -63,6 +68,7 @@ $PAGE->set_cacheable(false);
  */
 
 // Output starts here.
+// Esta vista permite el ingreso a la clase, es parte de la TAB de Información de la reunión.
 
 echo $OUTPUT->header();
 $currenttab = 'meetinginfo';
@@ -73,14 +79,37 @@ if ($recordingszoom->intro) {
     echo $OUTPUT->box(format_module_intro('recordingszoom', $recordingszoom, $cm->id), 'generalbox mod_introbox', 'recordingszoomintro');
 }
 
-echo $OUTPUT->heading(format_string( $strtitulodelalista ), 3);
+$zoom_meetings_id_array = array($recordingszoom->zoom_meeting_id, $recordingszoom->zoom_meeting_id_2, $recordingszoom->zoom_meeting_id_3, $recordingszoom->zoom_meeting_id_4);
 
-$buttonhtml = html_writer::tag('button', $strjoinmeeting, array('type' => 'submit', 'class' => 'btn btn-primary'));
-$aurl = new moodle_url('/mod/recordingszoom/joinmeeting.php', array('id' => $cm->id));
-$buttonhtml .= html_writer::input_hidden_params($aurl);
-$link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring()));
+foreach ($zoom_meetings_id_array as $sesion_zoom_meetings_id) {
 
-echo $link;
+    if($sesion_zoom_meetings_id){
+
+            echo $OUTPUT->heading(format_string( $strsesionesprogramadas.$sesion_zoom_meetings_id ), 5);
+            $zoom = mod_recordingszoom_get_meeting_info($sesion_zoom_meetings_id);
+
+            $table = new html_table();
+            $table->attributes['class'] = 'generaltable mod_view';
+
+            $table->align = array('center', 'left');
+            $numcolumns = 2;
+
+            $table->data[] = array($strtitulo, $zoom->topic);
+            $table->data[] = array($strdescripcion, $zoom->agenda);
+
+            $buttonhtml = html_writer::tag('button', $strjoinmeeting, array('type' => 'submit', 'class' => 'btn btn-primary'));
+            $aurl = new moodle_url('/mod/recordingszoom/joinmeeting.php', array('id' => $cm->id, 'zoom_id' => $sesion_zoom_meetings_id));
+            $buttonhtml .= html_writer::input_hidden_params($aurl);
+            $link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring(), 'target' => '_blank'));
+
+            $title = new html_table_cell($link);
+            $table->data[] = array($straccion, $title);
+
+            echo html_writer::table($table);
+    }
+}
+
+
 
 // Finish the page.
 echo $OUTPUT->footer();
