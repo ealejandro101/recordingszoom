@@ -64,6 +64,5 @@ $string['joinmeeting'] = 'Ingresar a la reunión' ;
 $string['errorwebservice'] = 'Error en el llamado del webservice de Zoom: {$a}. Por favor contacte al administrador de la plataforma';
 $string['titulo'] = 'Título';
 $string['descripcion'] = 'Descripción';
-$string['accion'] = 'Acción';
 $string['zoomid'] = 'Id de reunión';
 
