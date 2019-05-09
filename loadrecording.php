@@ -30,13 +30,32 @@ require_once($CFG->libdir . '/gradelib.php');
 require_once($CFG->libdir . '/moodlelib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 
-list($course, $cm, $recordingszoom) = recordingszoom_get_instance_setup();
+// Course_module ID.
+$id = required_param('id', PARAM_INT);
+$zoom_id = required_param('zoom_id', PARAM_INT);
+if ($id) {
+    $cm         = get_coursemodule_from_id('recordingszoom', $id, 0, false, MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $recordingszoom  = $DB->get_record('recordingszoom', array('id' => $cm->instance), '*', MUST_EXIST);
+} else {
+    print_error('You must specify a course_module ID');
+}
 
-$zoomplayredirect = required_param('zoomplayredirect', PARAM_URL); // zoom play redirect.
+require_login($course, true, $cm);
 
+$context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
-//Todo - Crear en el log que el usuario dio click en la reproducción.
+$zoomplayredirect = required_param('zoomplayredirect', PARAM_URL); // zoom play redirect.
+$zoomstarttime = required_param('zoomstarttime', PARAM_TEXT); // zoom start time.
+
+
+require_capability('mod/recordingszoom:view', $context);
+
+if( !(($zoom_id == $recordingszoom->zoom_meeting_id) || ($zoom_id == $recordingszoom->zoom_meeting_id_2) || 
+    ($zoom_id == $recordingszoom->zoom_meeting_id_3) || ($zoom_id == $recordingszoom->zoom_meeting_id_4) ) ){
+        throw new moodle_exception('error', 'mod_recordingszoom', '', 'errorzoomidnovalido');
+    }
 
 // Check whether user had a grade. If no, then assign full credits to him or her.
 $gradelist = grade_get_grades($course->id, 'mod', 'recordingszoom', $cm->instance, $USER->id);
@@ -57,4 +76,9 @@ if (!empty($gradelist->items) && empty($gradelist->items[0]->grades[$USER->id]->
 
 // Redirect user to play zoom meeting.
 $joinurl = new moodle_url($zoomplayredirect);
+
+// Record user's clicking view recording.
+\mod_recordingszoom\event\view_recording_button_clicked::create(array('context' => $context, 'objectid' => $zoom_id, 'other' =>
+        array('cmid' => $id, 'meetingid' => (int) $zoom_id, 'zoomstarttime' => (string) $zoomstarttime )))->trigger();
+
 redirect($joinurl);

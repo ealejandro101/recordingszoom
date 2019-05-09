@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2018 Alejandro Escobar <ealejandro101@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class join_meeting_button_clicked extends \core\event\base {
+class view_recording_button_clicked extends \core\event\base {
 
     /**
      * Initializes the event.
@@ -48,12 +48,12 @@ class join_meeting_button_clicked extends \core\event\base {
      * Validates arguments.
      */
     protected function validate_data() {
-        $fieldstovalidate = array('cmid' => "integer", 'meetingid' => "integer");
+        $fieldstovalidate = array('cmid' => "integer", 'meetingid' => "integer", "zoomstarttime" => ("string"));
         foreach ($fieldstovalidate as $field => $shouldbe) {
             if (is_null($this->other[$field])) {
                 throw new \coding_exception("The $field value must be set in other.");
             } else if (gettype($this->other[$field]) != $shouldbe) {
-                throw new \coding_exception("The $field value must be an $shouldbe.");
+                throw new \coding_exception("The $field value must be an $shouldbe." . " is " . gettype($this->other[$field]));
             }
         }
     }
@@ -64,7 +64,7 @@ class join_meeting_button_clicked extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('clickjoin', 'mod_recordingszoom');
+        return get_string('clickviewrecording', 'mod_recordingszoom');
     }
 
     /**
@@ -73,8 +73,8 @@ class join_meeting_button_clicked extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "User '$this->userid' joined meeting with meeting_id '" .
-                $this->other['meetingid'] . "' in course '$this->courseid'";
+        return "User $this->userid View recording with meeting_id " .
+                $this->other['meetingid'] . " and start time " . $this->other['zoomstarttime'] . " in course $this->courseid";
     }
 
     /**

@@ -49,6 +49,11 @@ $PAGE->set_context($context);
 
 require_capability('mod/recordingszoom:view', $context);
 
+if( !(($zoom_id == $recordingszoom->zoom_meeting_id) || ($zoom_id == $recordingszoom->zoom_meeting_id_2) || 
+    ($zoom_id == $recordingszoom->zoom_meeting_id_3) || ($zoom_id == $recordingszoom->zoom_meeting_id_4) ) ){
+        throw new moodle_exception('error', 'mod_recordingszoom', '', 'errorzoomidnovalido');
+    }
+
 // Check whether user had a grade. If no, then assign full credits to him or her.
 $gradelist = grade_get_grades($course->id, 'mod', 'recordingszoom', $cm->instance, $USER->id);
 
@@ -66,15 +71,10 @@ if (!empty($gradelist->items) && empty($gradelist->items[0]->grades[$USER->id]->
     recordingszoom_grade_item_update($recordingszoom, $grades);
 }
 
-if( !(($zoom_id == $recordingszoom->zoom_meeting_id) || ($zoom_id == $recordingszoom->zoom_meeting_id_2) || 
-    ($zoom_id == $recordingszoom->zoom_meeting_id_3) || ($zoom_id == $recordingszoom->zoom_meeting_id_4) ) ){
-        throw new moodle_exception('error', 'mod_recordingszoom', '', 'errorzoomidnovalido');
-    }
-
 $zoom = mod_recordingszoom_get_meeting_info($zoom_id);
 
 // Record user's clicking join.
-\mod_zoom\event\join_meeting_button_clicked::create(array('context' => $context, 'objectid' => $zoom_id, 'other' =>
+\mod_recordingszoom\event\join_meeting_button_clicked::create(array('context' => $context, 'objectid' => $zoom_id, 'other' =>
         array('cmid' => $id, 'meetingid' => (int) $zoom_id)))->trigger();
 
 // Redirect user to play zoom meeting.

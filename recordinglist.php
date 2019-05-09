@@ -135,10 +135,10 @@ if (!empty($zoomlistmeetings_with_recordings)) {
     $duration = new html_table_cell( $strduration );
     $duration->header = true;
 
-    $play_url = new html_table_cell( $straccion);
-    $play_url->header = true;
+    $share_url = new html_table_cell( $straccion);
+    $share_url->header = true;
 
-    $table->data[] = array($zoomid, $topic, $start_time, $duration, $play_url );
+    $table->data[] = array($zoomid, $topic, $start_time, $duration, $share_url );
 
     foreach ($zoomlistmeetings_with_recordings as $meeting_recording ) {
 
@@ -146,27 +146,16 @@ if (!empty($zoomlistmeetings_with_recordings)) {
         $topic = new html_table_cell($meeting_recording->topic);
         $start_time = new html_table_cell($meeting_recording->start_time);
         $duration = new html_table_cell($meeting_recording->duration);
-        // Tabla interior con lista de botones para ver grabación
-        $table_url_file_recording_mp4 = new html_table();
-        $table_url_file_recording_mp4->attributes['class'] = 'generaltable simple';
-        $table_url_file_recording_mp4->align = array('center', 'left');
-        
-        foreach($meeting_recording->recording_files as $file_recording){
-            if($file_recording->file_type == "MP4"){
 
-                $buttonhtml = html_writer::tag('button', $strplayrecording, array('type' => 'submit', 'class' => 'btn btn-primary'));
-                $aurl = new moodle_url('/mod/recordingszoom/loadrecording.php', array('id' => $cm->id, 'zoomplayredirect' => $file_recording->play_url));
-                $buttonhtml .= html_writer::input_hidden_params($aurl);
-                $link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring()));
-
-                $cell_play_url_button  = new html_table_cell($link);
-                $table_url_file_recording_mp4->data[] =  array($cell_play_url_button);
-            }
-        }
-        // Todo, que hacer si no hay MP4?
-        $play_url = new html_table_cell( html_writer::table($table_url_file_recording_mp4) );
-
-        $table->data[] = array($zoomid, $topic, $start_time, $duration, $play_url );
+        $buttonhtml = html_writer::tag('button', $strplayrecording, array('type' => 'submit', 'class' => 'btn btn-primary'));
+        $aurl = new moodle_url('/mod/recordingszoom/loadrecording.php', array('id' => $cm->id, 
+                                                                                'zoomplayredirect' => $meeting_recording->share_url, 
+                                                                                'zoomstarttime' => $meeting_recording->start_time, 
+                                                                                'zoom_id' => $meeting_recording->id) );
+        $buttonhtml .= html_writer::input_hidden_params($aurl);
+        $link = html_writer::tag('form', $buttonhtml, array('action' => $aurl->out_omit_querystring(), 'target' => '_blank'));
+        $share_url  = new html_table_cell($link);
+        $table->data[] = array($zoomid, $topic, $start_time, $duration, $share_url );
     }
 }
 

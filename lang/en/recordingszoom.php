@@ -65,3 +65,5 @@ $string['errorwebservice'] = 'Error in the call of the Zoom webservice: {$a}. Pl
 $string['titulo'] = 'Title';
 $string['descripcion'] = 'Description';
 $string['zoomid'] = 'Meeting ID';
+$string['clickviewrecording'] = 'View recording';
+$string['clickjoin'] = 'Join meeting';
