@@ -73,7 +73,10 @@ if( !(($zoom_id == $recordingszoom->zoom_meeting_id) || ($zoom_id == $recordings
 
 $zoom = mod_recordingszoom_get_meeting_info($zoom_id);
 
+// Record user's clicking join.
+\mod_zoom\event\join_meeting_button_clicked::create(array('context' => $context, 'objectid' => $zoom_id, 'other' =>
+        array('cmid' => $id, 'meetingid' => (int) $zoom_id)))->trigger();
+
 // Redirect user to play zoom meeting.
 $joinurl = new moodle_url($zoom->join_url, array('uname' => fullname($USER)));
-
 redirect($joinurl);
