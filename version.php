@@ -28,8 +28,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_recordingszoom';
-$plugin->version = 201903110010;
-$plugin->release = 'v0.4';
+$plugin->version = 201905090010;
+$plugin->release = 'v0.5';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->cron = 0;
